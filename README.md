@@ -1,3 +1,6 @@
+View a live version of the current code at : https://react-color-app-jh.herokuapp.com/
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
