@@ -10,6 +10,7 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
+    textDecoration: "none",
   },
   container: {
     width: "50%",
@@ -50,6 +51,8 @@ class PaletteList extends Component {
               <Link to={`/palette/${palette.id}`}>
                 <MiniPalette
                   {...palette}
+                  key={palette.id}
+                  id={palette.id}
                   handleClick={() => this.goToPalette(palette.id)}
                 />
               </Link>

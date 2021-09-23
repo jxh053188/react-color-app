@@ -9,6 +9,7 @@ const styles = {
     padding: "0.5rem",
     position: "relative",
     overflow: "hidden",
+    textDecoration: "none",
     "&:hover": {
       cursor: "pointer",
     },
@@ -29,6 +30,7 @@ const styles = {
     paddingTop: "0.5rem",
     fontSize: "1rem",
     position: "relative",
+    textDecoration: "none",
   },
   emoji: {
     marginLeft: "0.5rem",
