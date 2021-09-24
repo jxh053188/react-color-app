@@ -14,7 +14,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ChromePicker } from "react-color";
 import Button from "@mui/material/Button";
-import { ConstructionRounded, ThirtyFpsSharp } from "@mui/icons-material";
+import DraggableColorBox from "./DraggableColorBox.js";
 
 const drawerWidth = 300;
 
@@ -22,6 +22,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
+    height: `calc(100vh - 64px)`,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -67,6 +68,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [currentColor, setCurrentColor] = React.useState("teal");
+  const [colors, setColorsArray] = React.useState(["purple", "green"]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -76,9 +78,13 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  const handleChangeColor = (color, event) => {
+  const handleChangeColor = (color) => {
     setCurrentColor(color.hex);
     console.log(currentColor);
+  };
+
+  const addNewColor = () => {
+    setColorsArray([...colors, currentColor]);
   };
 
   return (
@@ -137,12 +143,19 @@ export default function PersistentDrawerLeft() {
           color={currentColor}
           onChangeComplete={handleChangeColor}
         />
-        <Button variant="contained" style={{ background: currentColor }}>
+        <Button
+          variant="contained"
+          onClick={addNewColor}
+          style={{ background: currentColor }}
+        >
           Add color
         </Button>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        {colors.map((color) => (
+          <DraggableColorBox color={color} />
+        ))}
       </Main>
     </Box>
   );
