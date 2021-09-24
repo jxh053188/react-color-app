@@ -20,11 +20,9 @@ class App extends Component {
       return palette.id === id;
     });
   }
-
   savePalette(newPalette) {
     this.setState({ palettes: [...this.state.palettes, newPalette] });
   }
-
   render() {
     return (
       <>

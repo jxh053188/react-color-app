@@ -89,6 +89,7 @@ export default function PersistentDrawerLeft(props) {
   const addNewColor = () => {
     const newColor = { color: currentColor, name: newName };
     setColorsArray([...colors, newColor]);
+    setNewName("");
     console.log(colors);
   };
 
