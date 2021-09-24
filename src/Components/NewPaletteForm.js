@@ -14,6 +14,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ChromePicker } from "react-color";
 import Button from "@mui/material/Button";
+import { ConstructionRounded, ThirtyFpsSharp } from "@mui/icons-material";
 
 const drawerWidth = 300;
 
@@ -64,7 +65,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [currentColor, setCurrentColor] = React.useState("teal");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -72,6 +74,11 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleChangeColor = (color, event) => {
+    setCurrentColor(color.hex);
+    console.log(currentColor);
   };
 
   return (
@@ -117,14 +124,22 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <Typography variant="h4">Design Your Palette</Typography>
+        <Typography variant="h5">
+          Under Construction! Check back for updates and functionality.
+        </Typography>
         <div>
           <Button variant="contained" color="secondary">
             Clear Palette
           </Button>
           <Button variant="contained">Random color</Button>
         </div>
-        <ChromePicker />
-        <Button variant="contained">Add color</Button>
+        <ChromePicker
+          color={currentColor}
+          onChangeComplete={handleChangeColor}
+        />
+        <Button variant="contained" style={{ background: currentColor }}>
+          Add color
+        </Button>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
