@@ -21,8 +21,8 @@ class PaletteList extends Component {
             {palettes.map((palette) => (
               <Link to={`/palette/${palette.id}`}>
                 <MiniPalette
-                  {...palette}
                   key={palette.id}
+                  {...palette}
                   id={palette.id}
                   handleClick={() => this.goToPalette(palette.id)}
                 />

@@ -15,6 +15,7 @@ import { ChromePicker } from "react-color";
 import Button from "@mui/material/Button";
 import DraggableColorBox from "./DraggableColorBox.js";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 300;
 
@@ -64,10 +65,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function PersistentDrawerLeft() {
+export default function PersistentDrawerLeft(props) {
   const theme = useTheme();
+  let history = useHistory();
   const [open, setOpen] = React.useState(true);
-  const [currentColor, setCurrentColor] = React.useState("teal");
+  const [currentColor, setCurrentColor] = React.useState("#813232");
   const [colors, setColorsArray] = React.useState([]);
   const [newName, setNewName] = React.useState("");
 
@@ -94,6 +96,17 @@ export default function PersistentDrawerLeft() {
     setNewName(e.target.value);
   };
 
+  const savePalette = () => {
+    let newName = "New Test Palette";
+    const newPalette = {
+      paletteName: newName,
+      id: newName.toLowerCase().replace(/ /g, "-"),
+      colors: { colors },
+    };
+    props.savePalette(newPalette);
+    history.push("/");
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -109,8 +122,11 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Create A Palette
           </Typography>
+          <Button variant="contained" color="secondary" onClick={savePalette}>
+            Save Palette
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
