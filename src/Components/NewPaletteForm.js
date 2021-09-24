@@ -5,7 +5,6 @@ import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -15,6 +14,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ChromePicker } from "react-color";
 import Button from "@mui/material/Button";
 import DraggableColorBox from "./DraggableColorBox.js";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 const drawerWidth = 300;
 
@@ -68,7 +68,8 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [currentColor, setCurrentColor] = React.useState("teal");
-  const [colors, setColorsArray] = React.useState(["purple", "green"]);
+  const [colors, setColorsArray] = React.useState([]);
+  const [newName, setNewName] = React.useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -84,7 +85,13 @@ export default function PersistentDrawerLeft() {
   };
 
   const addNewColor = () => {
-    setColorsArray([...colors, currentColor]);
+    const newColor = { color: currentColor, name: newName };
+    setColorsArray([...colors, newColor]);
+    console.log(colors);
+  };
+
+  const handleNameChange = (e) => {
+    setNewName(e.target.value);
   };
 
   return (
@@ -143,18 +150,31 @@ export default function PersistentDrawerLeft() {
           color={currentColor}
           onChangeComplete={handleChangeColor}
         />
-        <Button
-          variant="contained"
-          onClick={addNewColor}
-          style={{ background: currentColor }}
-        >
-          Add color
-        </Button>
+        <ValidatorForm onSubmit={addNewColor}>
+          <TextValidator
+            value={newName}
+            onChange={handleNameChange}
+            validators={["required"]}
+            errorMessages={["this field is required"]}
+          />
+
+          <Button
+            variant="contained"
+            type="submit"
+            style={{ background: currentColor }}
+          >
+            Add color
+          </Button>
+        </ValidatorForm>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
         {colors.map((color) => (
-          <DraggableColorBox color={color} />
+          <DraggableColorBox
+            key={color.color}
+            color={color.color}
+            name={color.name}
+          />
         ))}
       </Main>
     </Box>
