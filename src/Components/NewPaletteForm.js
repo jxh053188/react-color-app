@@ -70,7 +70,9 @@ export default function PersistentDrawerLeft(props) {
   let history = useHistory();
   const [open, setOpen] = React.useState(true);
   const [currentColor, setCurrentColor] = React.useState("#813232");
-  const [colors, setColorsArray] = React.useState([]);
+  const [colors, setColorsArray] = React.useState([
+    { color: "blue", name: "blue" },
+  ]);
   const [newName, setNewName] = React.useState("");
 
   const handleDrawerOpen = () => {
@@ -87,7 +89,7 @@ export default function PersistentDrawerLeft(props) {
   };
 
   const addNewColor = () => {
-    const newColor = { color: currentColor, name: newName };
+    const newColor = { name: newName, color: currentColor };
     setColorsArray([...colors, newColor]);
     setNewName("");
     console.log(colors);
@@ -102,8 +104,10 @@ export default function PersistentDrawerLeft(props) {
     const newPalette = {
       paletteName: newName,
       id: newName.toLowerCase().replace(/ /g, "-"),
-      colors: { colors },
+      colors: colors,
     };
+
+    console.log(newPalette);
     props.savePalette(newPalette);
     history.push("/");
   };
