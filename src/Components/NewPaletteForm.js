@@ -12,8 +12,10 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { ChromePicker } from "react-color";
+import Button from "@mui/material/Button";
 
-const drawerWidth = 340;
+const drawerWidth = 300;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -114,6 +116,15 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <Typography variant="h4">Design Your Palette</Typography>
+        <div>
+          <Button variant="contained" color="secondary">
+            Clear Palette
+          </Button>
+          <Button variant="contained">Random color</Button>
+        </div>
+        <ChromePicker />
+        <Button variant="contained">Add color</Button>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
