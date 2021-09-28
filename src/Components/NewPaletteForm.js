@@ -118,6 +118,10 @@ export default function PersistentDrawerLeft(props) {
     history.push("/");
   };
 
+  const removeColor = (colorName) => {
+    setColorsArray(colors.filter((color) => color.name !== colorName));
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -211,6 +215,7 @@ export default function PersistentDrawerLeft(props) {
             key={color.color}
             color={color.color}
             name={color.name}
+            handleDelete={() => removeColor(color.name)}
           />
         ))}
       </Main>
