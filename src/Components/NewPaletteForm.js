@@ -45,6 +45,7 @@ const AppBar = styled(MuiAppBar, {
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
+    display: "flex",
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -74,6 +75,7 @@ export default function PersistentDrawerLeft(props) {
     { color: "blue", name: "blue" },
   ]);
   const [newName, setNewName] = React.useState("");
+  const [newPaletteName, setNewPaletteName] = React.useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,8 +101,12 @@ export default function PersistentDrawerLeft(props) {
     setNewName(e.target.value);
   };
 
+  const handlePaletteNameChange = (e) => {
+    setNewPaletteName(e.target.value);
+  };
+
   const savePalette = () => {
-    let newName = "New Test Palette";
+    let newName = newPaletteName;
     const newPalette = {
       paletteName: newName,
       id: newName.toLowerCase().replace(/ /g, "-"),
@@ -129,9 +135,19 @@ export default function PersistentDrawerLeft(props) {
           <Typography variant="h6" noWrap component="div">
             Create A Palette
           </Typography>
-          <Button variant="contained" color="secondary" onClick={savePalette}>
-            Save Palette
-          </Button>
+          <ValidatorForm onSubmit={savePalette}>
+            <TextValidator
+              label="Palette name"
+              value={newPaletteName}
+              name="newPaletteName"
+              onChange={handlePaletteNameChange}
+              validators={["required"]}
+              errorMessages={["Enter a palette name."]}
+            />
+            <Button variant="contained" color="secondary" type="submit">
+              Save Palette
+            </Button>
+          </ValidatorForm>
         </Toolbar>
       </AppBar>
       <Drawer
