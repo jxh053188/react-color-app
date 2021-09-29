@@ -17,6 +17,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { useHistory } from "react-router-dom";
 import DraggableColorList from "./DraggableColorList.js";
 import { arrayMove } from "react-sortable-hoc";
+import chroma, { hex } from "chroma-js";
 
 const drawerWidth = 300;
 
@@ -127,6 +128,13 @@ export default function PersistentDrawerLeft(props) {
     setColorsArray(arrayMove(colors, oldIndex, newIndex));
   };
 
+  const randomColor = () => {
+    let newColor = chroma.random(hex);
+    console.log(newColor);
+    const newColorName = "Random Color";
+    setColorsArray([...colors, { newColor, newColorName }]);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -187,10 +195,16 @@ export default function PersistentDrawerLeft(props) {
           Under Construction! Check back for updates and functionality.
         </Typography>
         <div>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setColorsArray([])}
+          >
             Clear Palette
           </Button>
-          <Button variant="contained">Random color</Button>
+          <Button variant="contained" onClick={randomColor}>
+            Random color
+          </Button>
         </div>
         <ChromePicker
           color={currentColor}
